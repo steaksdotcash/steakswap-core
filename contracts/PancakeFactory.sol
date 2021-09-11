@@ -3,7 +3,7 @@ pragma solidity =0.5.16;
 import './interfaces/IPancakeFactory.sol';
 import './PancakePair.sol';
 
-contract BenSwapFactory is IPancakeFactory {
+contract SteakSwapFactory is IPancakeFactory {
     bytes32 public constant INIT_CODE_PAIR_HASH = keccak256(abi.encodePacked(type(PancakePair).creationCode));
 
     address public feeTo;
@@ -23,10 +23,10 @@ contract BenSwapFactory is IPancakeFactory {
     }
 
     function createPair(address tokenA, address tokenB) external returns (address pair) {
-        require(tokenA != tokenB, 'BenSwap: IDENTICAL_ADDRESSES');
+        require(tokenA != tokenB, 'SteakSwap: IDENTICAL_ADDRESSES');
         (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
-        require(token0 != address(0), 'BenSwap: ZERO_ADDRESS');
-        require(getPair[token0][token1] == address(0), 'BenSwap: PAIR_EXISTS'); // single check is sufficient
+        require(token0 != address(0), 'SteakSwap: ZERO_ADDRESS');
+        require(getPair[token0][token1] == address(0), 'SteakSwap: PAIR_EXISTS'); // single check is sufficient
         bytes memory bytecode = type(PancakePair).creationCode;
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
         assembly {
@@ -40,12 +40,12 @@ contract BenSwapFactory is IPancakeFactory {
     }
 
     function setFeeTo(address _feeTo) external {
-        require(msg.sender == feeToSetter, 'BenSwap: FORBIDDEN');
+        require(msg.sender == feeToSetter, 'SteakSwap: FORBIDDEN');
         feeTo = _feeTo;
     }
 
     function setFeeToSetter(address _feeToSetter) external {
-        require(msg.sender == feeToSetter, 'BenSwap: FORBIDDEN');
+        require(msg.sender == feeToSetter, 'SteakSwap: FORBIDDEN');
         feeToSetter = _feeToSetter;
     }
 }
